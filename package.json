@@ -1,6 +1,6 @@
 {
   "name": "@rello-platform/eslint-config",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Canonical ESLint config for the Rello platform (slim Next.js baseline + slug-rule)",
   "type": "module",
   "exports": {
@@ -25,7 +25,7 @@
     "eslint-config-next": "^16.1.0"
   },
   "dependencies": {
-    "@rello-platform/eslint-plugin-permissions": "github:rello-platform/eslint-plugin-permissions#v0.1.0",
+    "@rello-platform/eslint-plugin-permissions": "github:rello-platform/eslint-plugin-permissions#v0.2.0",
     "@rello-platform/eslint-plugin-slugs": "github:rello-platform/eslint-plugin-slugs#v0.1.0"
   },
   "devDependencies": {
