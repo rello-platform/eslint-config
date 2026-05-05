@@ -34,25 +34,44 @@ const eslintConfig = defineConfig([
     rules: { "@rello-platform/permissions/no-string-permission": "error" },
   },
   // @rello-platform/platform-rules/* — eight rules codifying drift signals
-  // from PLATFORM-PATTERNS-CATALOG.md. Same severities as /next consumers.
-  // Path-scoped rules (no-inline-tab-arrays, no-redeclared-api-response-types,
-  // no-fixture-data-when-upstream-unshipped, no-env-var-bearer-fallback) only
-  // fire when their target file globs hit — most library-shaped consumers
-  // never touch those paths, so the additional rules are no-ops there.
-  // Universal-floor rules (no-empty-catches, canonical-slug-imports,
-  // no-process-env-secret-compare, lead-not-contact) DO fire across library
-  // code and are the primary value-add for /library consumers.
+  // from PLATFORM-PATTERNS-CATALOG.md. Same severity table as /next consumers
+  // (mirrored). v0.6.1 demotes no-empty-catches, canonical-slug-imports,
+  // no-env-var-bearer-fallback warn (foundation grace per spec §Phase 3.B);
+  // no-process-env-secret-compare stays at error (auth-fragmentation Phase 3+4
+  // already cleaned; error prevents regression).
   {
     plugins: { "@rello-platform/platform-rules": platformRulesPlugin },
     rules: {
-      "@rello-platform/platform-rules/no-empty-catches": "error",
-      "@rello-platform/platform-rules/canonical-slug-imports": "error",
+      "@rello-platform/platform-rules/no-empty-catches": "warn",
+      "@rello-platform/platform-rules/canonical-slug-imports": "warn",
       "@rello-platform/platform-rules/no-process-env-secret-compare": "error",
-      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "error",
+      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "warn",
       "@rello-platform/platform-rules/no-inline-tab-arrays": "warn",
       "@rello-platform/platform-rules/no-redeclared-api-response-types": "warn",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "warn",
       "@rello-platform/platform-rules/lead-not-contact": "warn",
+    },
+  },
+  // Dev-only / non-production paths — turn ALL platform-rules off. Mirrors
+  // /next override. Library consumers without scripts/ or prisma/seed-*.ts
+  // simply have no files matching these globs (no-op).
+  {
+    files: [
+      "scripts/**",
+      "scripts-ad-hoc/**",
+      "prisma/seed-*.ts",
+      "prisma/seed-*.js",
+      "public/**/*.js",
+    ],
+    rules: {
+      "@rello-platform/platform-rules/no-empty-catches": "off",
+      "@rello-platform/platform-rules/canonical-slug-imports": "off",
+      "@rello-platform/platform-rules/no-process-env-secret-compare": "off",
+      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "off",
+      "@rello-platform/platform-rules/no-inline-tab-arrays": "off",
+      "@rello-platform/platform-rules/no-redeclared-api-response-types": "off",
+      "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "off",
+      "@rello-platform/platform-rules/lead-not-contact": "off",
     },
   },
   // Tests and fixtures may legitimately reference legacy forms (verifying
