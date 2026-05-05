@@ -1,6 +1,6 @@
 {
   "name": "@rello-platform/eslint-config",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Canonical ESLint config for the Rello platform (slim Next.js baseline + slug-rule + permissions-rule + platform-rules)",
   "type": "module",
   "exports": {
@@ -30,9 +30,9 @@
     "eslint-config-next": "^16.1.0"
   },
   "dependencies": {
-    "@rello-platform/eslint-plugin-permissions": "git+https://github.com/rello-platform/eslint-plugin-permissions.git#v0.2.0",
-    "@rello-platform/eslint-plugin-platform-rules": "git+https://github.com/rello-platform/eslint-plugin-platform-rules.git#v0.1.0",
-    "@rello-platform/eslint-plugin-slugs": "git+https://github.com/rello-platform/eslint-plugin-slugs.git#v0.2.1",
+    "@rello-platform/eslint-plugin-permissions": "git+https://github.com/rello-platform/eslint-plugin-permissions.git#479102ec0fcf858641f3dc7bfd9e4a23983c6e2f",
+    "@rello-platform/eslint-plugin-platform-rules": "git+https://github.com/rello-platform/eslint-plugin-platform-rules.git#89e223d2ac93470d2485a31282031cddc99e5bf2",
+    "@rello-platform/eslint-plugin-slugs": "git+https://github.com/rello-platform/eslint-plugin-slugs.git#7b6f8c36c0d3fb3262c269ecf0148a0b113cd34f",
     "@typescript-eslint/parser": "^8.59.0"
   },
   "devDependencies": {
