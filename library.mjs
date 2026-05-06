@@ -35,17 +35,19 @@ const eslintConfig = defineConfig([
   },
   // @rello-platform/platform-rules/* — eight rules codifying drift signals
   // from PLATFORM-PATTERNS-CATALOG.md. Same severity table as /next consumers
-  // (mirrored). v0.6.1 demotes no-empty-catches, canonical-slug-imports,
-  // no-env-var-bearer-fallback warn (foundation grace per spec §Phase 3.B);
+  // (mirrored). v0.6.1 demoted no-empty-catches, canonical-slug-imports,
+  // no-env-var-bearer-fallback to warn (foundation grace per spec §Phase 3.B);
+  // v0.7.0 ramps them back to error after F8 cleanup Waves 1+2 drained all
+  // production-tree violations across Rello + 13 sibling consumer repos.
   // no-process-env-secret-compare stays at error (auth-fragmentation Phase 3+4
   // already cleaned; error prevents regression).
   {
     plugins: { "@rello-platform/platform-rules": platformRulesPlugin },
     rules: {
-      "@rello-platform/platform-rules/no-empty-catches": "warn",
-      "@rello-platform/platform-rules/canonical-slug-imports": "warn",
+      "@rello-platform/platform-rules/no-empty-catches": "error",
+      "@rello-platform/platform-rules/canonical-slug-imports": "error",
       "@rello-platform/platform-rules/no-process-env-secret-compare": "error",
-      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "warn",
+      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "error",
       "@rello-platform/platform-rules/no-inline-tab-arrays": "warn",
       "@rello-platform/platform-rules/no-redeclared-api-response-types": "warn",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "warn",

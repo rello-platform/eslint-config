@@ -1,6 +1,6 @@
 {
   "name": "@rello-platform/eslint-config",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "Canonical ESLint config for the Rello platform (slim Next.js baseline + slug-rule + permissions-rule + platform-rules)",
   "type": "module",
   "exports": {

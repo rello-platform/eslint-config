@@ -29,43 +29,36 @@ const eslintConfig = defineConfig([
   // @rello-platform/platform-rules/* — eight rules codifying drift signals
   // from PLATFORM-PATTERNS-CATALOG.md (per SPEC-PLATFORM-LINT-RULES-AND-HOOKS).
   //
-  // Severity table (v0.6.1 — adjusted per discovered violation reality):
-  //   error (1):
+  // Severity table (v0.7.0 — F8 cleanup complete; severity ramped back to
+  // error on the 3 rules that v0.6.1 demoted to warn for foundation grace):
+  //   error (4):
   //     no-process-env-secret-compare  (Rule I — auth-fragmentation Phase
   //                                     3+4 already cleaned; error prevents
   //                                     regression)
-  //   warn (7 — graced):
-  //     no-empty-catches               (universal floor; demoted from error
-  //                                     v0.6.0 → warn v0.6.1 because the
-  //                                     production tree carries 200+ existing
-  //                                     violations beyond spec assumption.
-  //                                     Cleanup ships in F8 spec; flip back
-  //                                     to error in F4 Phase 3.C ramp.)
-  //     canonical-slug-imports         (universal floor; demoted same reason
-  //                                     — 11 existing violations in seeders
-  //                                     and audit scripts. Cleanup in F8.)
-  //     no-env-var-bearer-fallback     (Rule I — admin/route.ts scope; demoted
-  //                                     because heuristic detector flags
-  //                                     legitimate non-Bearer env reads in
-  //                                     route handlers that also call
-  //                                     validateApiKey. Audit and promote in
-  //                                     v0.2.0 of plugin per spec §F7.)
+  //     no-empty-catches               (universal floor; demoted v0.6.1 → warn
+  //                                     because the production tree carried
+  //                                     200+ existing violations. F8 Waves 1+2
+  //                                     drained those; v0.7.0 ramps back to
+  //                                     error to prevent regression.)
+  //     canonical-slug-imports         (universal floor; same demote+ramp
+  //                                     trajectory — F8 cleanup landed; v0.7.0
+  //                                     restores error.)
+  //     no-env-var-bearer-fallback     (Rule I — admin/route.ts scope; F8
+  //                                     cleanup landed across all consumer
+  //                                     repos; v0.7.0 promotes to error.)
+  //   warn (4 — graced):
   //     no-inline-tab-arrays           (Rule G; warn permanent until ramp)
   //     no-redeclared-api-response-types  (Rule E; warn permanent until ramp)
   //     no-fixture-data-when-upstream-unshipped  (Rule L heuristic; warn
   //                                               permanent — human-judged)
   //     lead-not-contact               (heuristic; warn until F1 cleanup ramps)
-  //
-  // Severity ramp warn → error gated on Kelly authorization OR 14-day soak
-  // per spec §Phase 3.C, with F8 production-tree cleanup as prerequisite for
-  // no-empty-catches + canonical-slug-imports.
   {
     plugins: { "@rello-platform/platform-rules": platformRulesPlugin },
     rules: {
-      "@rello-platform/platform-rules/no-empty-catches": "warn",
-      "@rello-platform/platform-rules/canonical-slug-imports": "warn",
+      "@rello-platform/platform-rules/no-empty-catches": "error",
+      "@rello-platform/platform-rules/canonical-slug-imports": "error",
       "@rello-platform/platform-rules/no-process-env-secret-compare": "error",
-      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "warn",
+      "@rello-platform/platform-rules/no-env-var-bearer-fallback": "error",
       "@rello-platform/platform-rules/no-inline-tab-arrays": "warn",
       "@rello-platform/platform-rules/no-redeclared-api-response-types": "warn",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "warn",

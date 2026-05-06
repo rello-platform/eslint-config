@@ -70,6 +70,10 @@ git push origin v0.1.0
 
 The workflow verifies tag matches `package.json#version` and publishes to GitHub Packages using the workflow-provisioned `GITHUB_TOKEN`.
 
+## Severity ramp
+
+`v0.7.0` (2026-05-06) — `no-empty-catches`, `canonical-slug-imports`, and `no-env-var-bearer-fallback` ramped from `warn` to `error` after F8 production-tree cleanup (Waves 1+2) drained the backlog across Rello + 13 siblings. See `CHANGELOG.md` and `BUILT/SPEC-PLATFORM-LINT-PRODUCTION-CLEANUP.md` §Wave 3.
+
 ## Provenance
 
 PA-051 (April 2026 Platform Audit) — six byte-identical "slim" `eslint.config.mjs` copies + Rello's slug-rule variant consolidated into this single shared package. Companion: `~AUDITS/April2026 Platform Audit/PA-051-ESLINT-CONFIG-CANONICAL-TEMPLATE-042626-PARTIAL.md`.
