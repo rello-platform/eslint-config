@@ -15,6 +15,19 @@ const eslintConfig = defineConfig([
       parser: tsParser,
     },
   },
+  // no-console — universal-floor rule body: "no console.log in production
+  // (use console.error / console.warn)". Severity: error. Allow list covers
+  // operational signals (warn/error) and structured-logger primitives
+  // (info/debug — verified against each spoke's src/lib/**/logger* files;
+  // none use raw console.log inside their logger primitives). Per
+  // DISCOVERED-CROSS-SPOKE-CONSOLE-LOG-DRIFT-051626 DL3. Dev-only
+  // (scripts/seed) and test paths turn this off in the override blocks
+  // below — production-tree discipline only.
+  {
+    rules: {
+      "no-console": ["error", { allow: ["warn", "error", "info", "debug"] }],
+    },
+  },
   // @rello-platform/slugs/no-legacy-literal — forbid hardcoded legacy slug
   // literals (homeready, HOMESTRETCH, MarketIntel, scout, etc.). Canonical
   // hyphenated forms live in @rello-platform/slugs; UPPERCASE_UNDERSCORE
@@ -74,6 +87,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-redeclared-api-response-types": "off",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "off",
       "@rello-platform/platform-rules/lead-not-contact": "off",
+      "no-console": "off",
     },
   },
   // Tests and fixtures may legitimately reference legacy forms (verifying
@@ -95,6 +109,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-empty-catches": "off",
       "@rello-platform/platform-rules/lead-not-contact": "off",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "off",
+      "no-console": "off",
     },
   },
 ]);
