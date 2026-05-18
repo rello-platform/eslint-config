@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.8.0 — 2026-05-18 — Add `no-console` rule (universal-floor enforcement)
+
+Promotes the universal-floor rule body — "no `console.log` in production (use `console.error` / `console.warn`)" — from inherited-via-CLAUDE.md guidance to durable lint-time enforcement.
+
+- `no-console` — added at severity `error` with `{ allow: ["warn", "error", "info", "debug"] }`. Allow list covers operational signals (`warn` / `error`) plus structured-logger primitives (`info` / `debug`). Each consumer spoke's `src/lib/**/logger*` files were verified at compose time to use only the allow-list methods — no raw `console.log` inside logger primitives.
+
+Mirrored block (Kelly Option A) — same rule applied to both `next.mjs` and `library.mjs`. Override blocks turn the rule `off` for `scripts/**`, `scripts-ad-hoc/**`, `prisma/seed-*.{ts,js}`, `public/**/*.js` (dev-only) and `**/*.test.{ts,tsx}`, `**/*.spec.{ts,tsx}`, `**/__tests__/**`, `**/__fixtures__/**` (test paths) — production-tree discipline only.
+
+Per `DISCOVERED-CROSS-SPOKE-CONSOLE-LOG-DRIFT-051626` DL3. Adoption shape: each consumer spoke (THS / Rello / OHH / NS / Drumbeat) bumps the `@rello-platform/eslint-config` git-tag pin from `v0.7.0` → `v0.8.0` in the same PR that lands its `console.log` retro-sweep at zero `src/app/api/**/*.ts` instances. Sweep + pin-bump are atomic per Rule J — landing the pin against a non-zero baseline would surface ~185 cross-spoke errors and block CI.
+
 ## v0.7.0 — 2026-05-06 — Severity ramp warn → error (F8 Wave 3)
 
 Ramps three platform-rules from `warn` back to `error` after F8 production-tree cleanup drained the violation backlog across Rello + 13 sibling consumer repos:
