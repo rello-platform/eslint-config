@@ -26,9 +26,19 @@ const eslintConfig = defineConfig([
   // hyphenated forms live in @rello-platform/slugs; UPPERCASE_UNDERSCORE
   // routing identifiers (HOME_READY, OPEN_HOUSE_HUB, MILO_ENGINE) are the
   // legitimate SourceAppIdentifier namespace and are not flagged.
+  // @rello-platform/slugs/no-wildcard-apikey-permissions — forbid
+  // permissions: ["*"] on ApiKey row construction. Layer 1 of the 3-layer
+  // defense-in-depth from WILDCARD-APIKEY-DEPRECATION-CROSS-PLATFORM-SWEEP
+  // DISPATCH-8 (Layer 2: Prisma extension at src/lib/db/prisma.ts; Layer 3:
+  // Postgres CHECK constraint at prisma/sql/apikey-no-wildcard-permissions.sql).
+  // Wildcard permissions bypass per-pair least-privilege isolation. See
+  // ~API-KEY-LIFECYCLE-README.md §9.2 + §13 + DL-SPEC-Q5/Q6.
   {
     plugins: { "@rello-platform/slugs": slugsPlugin },
-    rules: { "@rello-platform/slugs/no-legacy-literal": "error" },
+    rules: {
+      "@rello-platform/slugs/no-legacy-literal": "error",
+      "@rello-platform/slugs/no-wildcard-apikey-permissions": "error",
+    },
   },
   // @rello-platform/permissions/no-string-permission — forbid string-literal
   // permission slugs anywhere except the canonical PERMISSION_SLUGS literal
@@ -123,6 +133,10 @@ const eslintConfig = defineConfig([
     ],
     rules: {
       "@rello-platform/slugs/no-legacy-literal": "off",
+      // Tests for the Prisma extension + DB CHECK construct ApiKey-shaped
+      // payloads with permissions: ["*"] specifically to assert the guard
+      // throws. Production-tree discipline only.
+      "@rello-platform/slugs/no-wildcard-apikey-permissions": "off",
       "@rello-platform/permissions/no-string-permission": "off",
       "@rello-platform/platform-rules/no-empty-catches": "off",
       "@rello-platform/platform-rules/lead-not-contact": "off",

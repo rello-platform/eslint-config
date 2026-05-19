@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.9.0 — 2026-05-18 — Wire `no-wildcard-apikey-permissions` rule (Layer 1 of WILDCARD-APIKEY-DEPRECATION DISPATCH-8)
+
+Wires the new `@rello-platform/slugs/no-wildcard-apikey-permissions` rule (added in `@rello-platform/eslint-plugin-slugs` v0.3.0) into both `next.mjs` and `library.mjs` at severity `error`. The rule rejects `permissions: ["*"]` (or any permissions array containing the `"*"` wildcard literal) on objects shaped like ApiKey row construction — module-scope literals with sibling `appSource` / `targetApp` / etc., or Prisma write-call payloads under `data` / `create` / `update` (covers `apiKey.create` / `apiKey.update` / `apiKey.upsert`).
+
+Layer 1 of the 3-layer defense-in-depth from `WILDCARD-APIKEY-DEPRECATION-CROSS-PLATFORM-SWEEP` DISPATCH-8. Layers 2-3 (Prisma extension + Postgres CHECK constraint) land in the companion Rello-side PR.
+
+- `@rello-platform/eslint-plugin-slugs` pin bumped to v0.3.0 SHA `521887937aae0df7873a644b883f83e853c1c5b6`.
+- Test-override blocks (`**/*.test.{ts,tsx}`, `**/*.spec.{ts,tsx}`, `**/__tests__/**`, `**/__fixtures__/**`) turn the rule `off` — tests for the Prisma extension + DB CHECK construct ApiKey-shaped fixtures with `permissions: ["*"]` specifically to assert the guard throws. Production-tree discipline only.
+
+Mirrored block (Kelly Option A) — same rule applied to both `next.mjs` and `library.mjs`.
+
+Wildcard permissions bypass per-pair least-privilege isolation enforced by `validateApiKey` + `hasPermission`. All 7 active wildcard rows in Rello prod Neon were retired by DISPATCHES 1-7 of the workstream; the rule prevents the class from being re-introduced. See `~API-KEY-LIFECYCLE-README.md` §9.2 + §13 + DL-SPEC-Q5/Q6.
+
+Adoption shape: each consumer spoke bumps the `@rello-platform/eslint-config` git-tag pin from `v0.8.0` → `v0.9.0` (explicit-ref form per `feedback-npm-github-tag-stale-resolve`). The post-DISPATCH 1-7 production tree has zero wildcard violations remaining, so the bump is safe to land atomically with no preceding sweep.
+
 ## v0.8.0 — 2026-05-18 — Add `no-console` rule (universal-floor enforcement)
 
 Promotes the universal-floor rule body — "no `console.log` in production (use `console.error` / `console.warn`)" — from inherited-via-CLAUDE.md guidance to durable lint-time enforcement.
