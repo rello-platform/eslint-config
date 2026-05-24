@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.10.0 (2026-05-24) -- Wire no-module-eval-cross-app-clients rule
+
+- Added `@rello-platform/platform-rules/no-module-eval-cross-app-clients` at `error` severity in both `next.mjs` and `library.mjs`
+- Scripts/seed + test/fixture override blocks turn it off (consistent with sibling rules)
+- Bumped plugin pin to Phase 1 SHA `abf81678366b5c93a48d048a2716a39643e95122` (plugin v0.3.0 with 9th rule)
+- Retroactively tagged v0.8.0 (769d401) and v0.9.0 (a078583)
+
+## v0.8.0 / v0.9.0 -- Retroactive tags
+
+- v0.8.0 (769d401): no-console rule
+- v0.9.0 (a078583): no-wildcard-apikey-permissions rule
+- Tags were missing; retroactively created in this release cycle
+
 ## v0.9.0 — 2026-05-18 — Wire `no-wildcard-apikey-permissions` rule (Layer 1 of WILDCARD-APIKEY-DEPRECATION DISPATCH-8)
 
 Wires the new `@rello-platform/slugs/no-wildcard-apikey-permissions` rule (added in `@rello-platform/eslint-plugin-slugs` v0.3.0) into both `next.mjs` and `library.mjs` at severity `error`. The rule rejects `permissions: ["*"]` (or any permissions array containing the `"*"` wildcard literal) on objects shaped like ApiKey row construction — module-scope literals with sibling `appSource` / `targetApp` / etc., or Prisma write-call payloads under `data` / `create` / `update` (covers `apiKey.create` / `apiKey.update` / `apiKey.upsert`).

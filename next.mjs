@@ -49,7 +49,7 @@ const eslintConfig = defineConfig([
     plugins: { "@rello-platform/permissions": permissionsPlugin },
     rules: { "@rello-platform/permissions/no-string-permission": "error" },
   },
-  // @rello-platform/platform-rules/* — eight rules codifying drift signals
+  // @rello-platform/platform-rules/* — nine rules codifying drift signals
   // from PLATFORM-PATTERNS-CATALOG.md (per SPEC-PLATFORM-LINT-RULES-AND-HOOKS).
   //
   // Severity table (v0.7.0 — F8 cleanup complete; severity ramped back to
@@ -86,6 +86,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-redeclared-api-response-types": "warn",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "warn",
       "@rello-platform/platform-rules/lead-not-contact": "warn",
+      "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "error",
     },
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. These
@@ -110,6 +111,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-redeclared-api-response-types": "off",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "off",
       "@rello-platform/platform-rules/lead-not-contact": "off",
+      "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "off",
       "no-console": "off",
     },
   },
@@ -141,6 +143,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-empty-catches": "off",
       "@rello-platform/platform-rules/lead-not-contact": "off",
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "off",
+      "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "off",
       "no-console": "off",
     },
   },
