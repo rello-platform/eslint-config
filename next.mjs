@@ -49,7 +49,7 @@ const eslintConfig = defineConfig([
     plugins: { "@rello-platform/permissions": permissionsPlugin },
     rules: { "@rello-platform/permissions/no-string-permission": "error" },
   },
-  // @rello-platform/platform-rules/* — nine rules codifying drift signals
+  // @rello-platform/platform-rules/* — ten rules codifying drift signals
   // from PLATFORM-PATTERNS-CATALOG.md (per SPEC-PLATFORM-LINT-RULES-AND-HOOKS).
   //
   // Severity table (v0.7.0 — F8 cleanup complete; severity ramped back to
@@ -75,6 +75,16 @@ const eslintConfig = defineConfig([
   //     no-fixture-data-when-upstream-unshipped  (Rule L heuristic; warn
   //                                               permanent — human-judged)
   //     lead-not-contact               (heuristic; warn until F1 cleanup ramps)
+  //     require-tenantid-in-where      (Layer 1 of the 3-layer tenantId
+  //                                     structural enforcement, DECISION-WALK
+  //                                     item A. Ships at warn — it CANNOT arm
+  //                                     to error until every AST-FAIL site
+  //                                     (~779 across ~265 files at recon) is
+  //                                     tenantId-filtered or EXEMPT-UPSTREAM-
+  //                                     VERIFIED marker-exempt. Building the
+  //                                     rule IS the forcing function driving
+  //                                     the remaining waves to green; the flip
+  //                                     to error is a later phase.)
   {
     plugins: { "@rello-platform/platform-rules": platformRulesPlugin },
     rules: {
@@ -87,6 +97,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "warn",
       "@rello-platform/platform-rules/lead-not-contact": "warn",
       "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "error",
+      "@rello-platform/platform-rules/require-tenantid-in-where": "warn",
     },
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. These
@@ -112,6 +123,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "off",
       "@rello-platform/platform-rules/lead-not-contact": "off",
       "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "off",
+      "@rello-platform/platform-rules/require-tenantid-in-where": "off",
       "no-console": "off",
     },
   },
