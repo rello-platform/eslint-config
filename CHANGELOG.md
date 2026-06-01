@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.11.0 (2026-06-01) -- Wire require-tenantid-in-where rule (Layer 1 tenantId enforcement)
+
+- Added `@rello-platform/platform-rules/require-tenantid-in-where` at `warn` severity in both `next.mjs` and `library.mjs` -- Layer 1 of the 3-layer tenantId structural enforcement locked in `DECISION-WALK-LOCKED-ANSWERS-2026-06-01` item A
+- Severity is `warn` (NOT `error`): the rule cannot arm to error until every AST-FAIL site (~779 across ~265 files at recon) is tenantId-filtered or `EXEMPT-UPSTREAM-VERIFIED` marker-exempt -- building the rule IS the forcing function driving the remaining waves to green
+- Scripts/seed override turns it off (consistent with sibling rules); test/fixture override turns it off too (warn-severity, non-gating)
+- Bumped plugin pin to `c03d8431691d0212ed6d3c1436e3c4e064683626` (plugin v0.4.0, 10th rule)
+
 ## v0.10.0 (2026-05-24) -- Wire no-module-eval-cross-app-clients rule
 
 - Added `@rello-platform/platform-rules/no-module-eval-cross-app-clients` at `error` severity in both `next.mjs` and `library.mjs`
