@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.11.1 (2026-06-01) -- Bump plugin to v0.4.1 (transaction-entry block-marker fix)
+
+- Bumped plugin pin `c03d8431` -> `911dd5df` (eslint-plugin-platform-rules v0.4.1)
+- v0.4.1 fixes `require-tenantid-in-where` block-marker recognition for the canonical transaction-entry convention (marker in the enclosing function above a `$transaction(...)` call now suppresses the nested cascade cluster). No severity/wiring change -- still `warn`.
+
 ## v0.11.0 (2026-06-01) -- Wire require-tenantid-in-where rule (Layer 1 tenantId enforcement)
 
 - Added `@rello-platform/platform-rules/require-tenantid-in-where` at `warn` severity in both `next.mjs` and `library.mjs` -- Layer 1 of the 3-layer tenantId structural enforcement locked in `DECISION-WALK-LOCKED-ANSWERS-2026-06-01` item A
