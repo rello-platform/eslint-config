@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.12.1 (2026-06-02) -- Broaden prisma dev-script override globs (seed.ts + backfill-* + migrate-*)
+
+- Arming `require-tenantid-in-where` to error (v0.12.0) surfaced bare-tenant Prisma queries in `prisma/seed.ts`, `prisma/backfill-*.ts`, and `prisma/migrate-*.ts` -- legitimate full-table enumeration in one-off `npx tsx` dev scripts (run after a `db push`, never the request path), NOT a runtime tenant-isolation leak. These are exactly the dev-only/seeder class the override block was designed to exempt, but the original glob (`prisma/seed-*.ts`) caught only the *hyphenated* seeders and missed the unhyphenated entry seeder + the backfill/migrate siblings.
+- Broadened the dev-only override `files` globs in both `next.mjs` and `library.mjs`: `prisma/seed-*.{ts,js}` -> `prisma/seed*.{ts,js}` (now covers `seed.ts`), plus added `prisma/backfill-*.{ts,js}` and `prisma/migrate-*.{ts,js}`. ALL platform-rules (not just require-tenantid) turn off there, consistent with the existing scripts/seed convention.
+- No severity/wiring change to the recommended config -- require-tenantid-in-where stays `error`. After this fix, Rello's repo-wide `eslint .` (the husky pre-push lint gate) is green at the armed pin.
+
 ## v0.12.0 (2026-06-02) -- ARM require-tenantid-in-where warn -> error (Layer 1 forcing-function lock)
 
 - Flipped `@rello-platform/platform-rules/require-tenantid-in-where` from `warn` to `error` in both `next.mjs` and `library.mjs` recommended configs -- the DECISION-WALK item-A forcing-function lock the locked ruling specified: "Arms to error (hard pre-push gate) once green."
