@@ -77,9 +77,11 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/lead-not-contact": "warn",
       "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "error",
       // Layer 1 of the 3-layer tenantId structural enforcement (DECISION-WALK
-      // item A). warn — forcing function; arms to error only once every
-      // AST-FAIL site is tenantId-filtered or EXEMPT-UPSTREAM-VERIFIED-marked.
-      "@rello-platform/platform-rules/require-tenantid-in-where": "warn",
+      // item A). ARMED warn → error in v0.12.0 — the forcing-function lock the
+      // locked ruling specified ("arms to error once green"), after Rello drove
+      // all ~1367 AST-FAIL sites to 0 / EXEMPT-UPSTREAM-VERIFIED-marked (Wave
+      // Final PR #296). OFF in the scripts/seed + test overrides below.
+      "@rello-platform/platform-rules/require-tenantid-in-where": "error",
     },
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. Mirrors
