@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.12.0 (2026-06-02) -- ARM require-tenantid-in-where warn -> error (Layer 1 forcing-function lock)
+
+- Flipped `@rello-platform/platform-rules/require-tenantid-in-where` from `warn` to `error` in both `next.mjs` and `library.mjs` recommended configs -- the DECISION-WALK item-A forcing-function lock the locked ruling specified: "Arms to error (hard pre-push gate) once green."
+- Green confirmed before arming: Rello drove all ~1367 AST-FAIL sites to 0 / `EXEMPT-UPSTREAM-VERIFIED` marker-exempt (Wave Final PR #296); pre-arm `npx eslint src` against Rello origin/main at v0.11.1 reported 0 `require-tenantid-in-where` occurrences repo-wide.
+- A NEW bare-tenant `where`-clause query now hard-fails `eslint` / `next build` / the husky pre-push gate (no longer a non-gating warning).
+- No severity change to the scripts/seed + test/fixture override blocks -- they stay `off`, matching the other ARMED rules (no-process-env-secret-compare, canonical-slug-imports, etc.).
+- No plugin pin change (still `911dd5df` / plugin v0.4.1) -- this is a wiring-only severity bump. `eslint-config` is a devDep, so no Trigger.dev redeploy is owed (per PLATFORM-PACKAGE-PIN-CONVENTION §7).
+
 ## v0.11.1 (2026-06-01) -- Bump plugin to v0.4.1 (transaction-entry block-marker fix)
 
 - Bumped plugin pin `c03d8431` -> `911dd5df` (eslint-plugin-platform-rules v0.4.1)

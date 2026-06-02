@@ -52,9 +52,12 @@ const eslintConfig = defineConfig([
   // @rello-platform/platform-rules/* — ten rules codifying drift signals
   // from PLATFORM-PATTERNS-CATALOG.md (per SPEC-PLATFORM-LINT-RULES-AND-HOOKS).
   //
-  // Severity table (v0.7.0 — F8 cleanup complete; severity ramped back to
-  // error on the 3 rules that v0.6.1 demoted to warn for foundation grace):
-  //   error (4):
+  // Severity table (v0.12.0 — require-tenantid-in-where ARMED warn → error,
+  // the DECISION-WALK item-A forcing-function lock, after Rello drove all
+  // ~1367 sites to 0 repo-wide (Wave Final PR #296). v0.7.0 — F8 cleanup
+  // complete; severity ramped back to error on the 3 rules that v0.6.1
+  // demoted to warn for foundation grace):
+  //   error (5):
   //     no-process-env-secret-compare  (Rule I — auth-fragmentation Phase
   //                                     3+4 already cleaned; error prevents
   //                                     regression)
@@ -69,22 +72,25 @@ const eslintConfig = defineConfig([
   //     no-env-var-bearer-fallback     (Rule I — admin/route.ts scope; F8
   //                                     cleanup landed across all consumer
   //                                     repos; v0.7.0 promotes to error.)
+  //     require-tenantid-in-where      (Layer 1 of the 3-layer tenantId
+  //                                     structural enforcement, DECISION-WALK
+  //                                     item A. ARMED warn → error in v0.12.0:
+  //                                     the locked ruling specified "arms to
+  //                                     error (hard pre-push gate) once green",
+  //                                     and Rello drove all ~1367 AST-FAIL
+  //                                     sites to 0 / EXEMPT-UPSTREAM-VERIFIED
+  //                                     marker-exempt (Wave Final PR #296,
+  //                                     verified 0 repo-wide pre-arm). A NEW
+  //                                     bare-tenant where-clause now hard-fails
+  //                                     the build + pre-push gate. OFF in the
+  //                                     scripts/seed + test overrides below,
+  //                                     matching the other ARMED rules.)
   //   warn (4 — graced):
   //     no-inline-tab-arrays           (Rule G; warn permanent until ramp)
   //     no-redeclared-api-response-types  (Rule E; warn permanent until ramp)
   //     no-fixture-data-when-upstream-unshipped  (Rule L heuristic; warn
   //                                               permanent — human-judged)
   //     lead-not-contact               (heuristic; warn until F1 cleanup ramps)
-  //     require-tenantid-in-where      (Layer 1 of the 3-layer tenantId
-  //                                     structural enforcement, DECISION-WALK
-  //                                     item A. Ships at warn — it CANNOT arm
-  //                                     to error until every AST-FAIL site
-  //                                     (~779 across ~265 files at recon) is
-  //                                     tenantId-filtered or EXEMPT-UPSTREAM-
-  //                                     VERIFIED marker-exempt. Building the
-  //                                     rule IS the forcing function driving
-  //                                     the remaining waves to green; the flip
-  //                                     to error is a later phase.)
   {
     plugins: { "@rello-platform/platform-rules": platformRulesPlugin },
     rules: {
@@ -97,7 +103,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/no-fixture-data-when-upstream-unshipped": "warn",
       "@rello-platform/platform-rules/lead-not-contact": "warn",
       "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "error",
-      "@rello-platform/platform-rules/require-tenantid-in-where": "warn",
+      "@rello-platform/platform-rules/require-tenantid-in-where": "error",
     },
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. These
