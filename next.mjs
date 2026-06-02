@@ -108,15 +108,26 @@ const eslintConfig = defineConfig([
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. These
   // surfaces are not the rules' target: smoke/verification scripts run once,
-  // prisma seeders legitimately enumerate slug arrays, public/sw.js is
-  // service-worker boilerplate. Production-quality discipline applies to
-  // src/ tree, not to scripts/ or seeders.
+  // prisma seeders legitimately enumerate slug arrays + backfills/migrations
+  // are one-off `npx tsx` scripts run after a `db push` (never the request
+  // path), public/sw.js is service-worker boilerplate. Production-quality
+  // discipline applies to the src/ tree, not to scripts/ or seeders.
+  // NOTE: the prisma glob set covers the unhyphenated entry seeder
+  // (`prisma/seed.ts`) AND the hyphenated `seed-*` / `backfill-*` / `migrate-*`
+  // one-off scripts. v0.12.1 broadened these from the original `seed-*` after
+  // arming require-tenantid-in-where to error surfaced bare-tenant queries in
+  // `prisma/seed.ts` + `backfill-*` + `migrate-*` (legitimate full-table
+  // enumeration in a dev-only script, not a runtime tenant-isolation leak).
   {
     files: [
       "scripts/**",
       "scripts-ad-hoc/**",
-      "prisma/seed-*.ts",
-      "prisma/seed-*.js",
+      "prisma/seed*.ts",
+      "prisma/seed*.js",
+      "prisma/backfill-*.ts",
+      "prisma/backfill-*.js",
+      "prisma/migrate-*.ts",
+      "prisma/migrate-*.js",
       "public/**/*.js",
     ],
     rules: {

@@ -85,14 +85,19 @@ const eslintConfig = defineConfig([
     },
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. Mirrors
-  // /next override. Library consumers without scripts/ or prisma/seed-*.ts
-  // simply have no files matching these globs (no-op).
+  // /next override (incl. the v0.12.1 prisma-glob broadening: unhyphenated
+  // seed.ts + seed-* + backfill-* + migrate-* one-off scripts). Library
+  // consumers without scripts/ or prisma/ simply have no matching files (no-op).
   {
     files: [
       "scripts/**",
       "scripts-ad-hoc/**",
-      "prisma/seed-*.ts",
-      "prisma/seed-*.js",
+      "prisma/seed*.ts",
+      "prisma/seed*.js",
+      "prisma/backfill-*.ts",
+      "prisma/backfill-*.js",
+      "prisma/migrate-*.ts",
+      "prisma/migrate-*.js",
       "public/**/*.js",
     ],
     rules: {
