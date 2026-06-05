@@ -49,7 +49,7 @@ const eslintConfig = defineConfig([
     plugins: { "@rello-platform/permissions": permissionsPlugin },
     rules: { "@rello-platform/permissions/no-string-permission": "error" },
   },
-  // @rello-platform/platform-rules/* — ten rules codifying drift signals
+  // @rello-platform/platform-rules/* — eleven rules codifying drift signals
   // from PLATFORM-PATTERNS-CATALOG.md (per SPEC-PLATFORM-LINT-RULES-AND-HOOKS).
   //
   // Severity table (v0.12.0 — require-tenantid-in-where ARMED warn → error,
@@ -104,6 +104,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/lead-not-contact": "warn",
       "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "error",
       "@rello-platform/platform-rules/require-tenantid-in-where": "error",
+      "@rello-platform/platform-rules/no-db-in-liveness": "error",
     },
   },
   // Dev-only / non-production paths — turn ALL platform-rules off. These
@@ -141,6 +142,7 @@ const eslintConfig = defineConfig([
       "@rello-platform/platform-rules/lead-not-contact": "off",
       "@rello-platform/platform-rules/no-module-eval-cross-app-clients": "off",
       "@rello-platform/platform-rules/require-tenantid-in-where": "off",
+      "@rello-platform/platform-rules/no-db-in-liveness": "off",
       "no-console": "off",
     },
   },
