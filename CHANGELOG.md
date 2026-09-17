@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.13.2 (2026-09-17) -- Bump plugin to v0.5.3 (no-db-in-liveness transitive import closure, A-111)
+
+- Bumped plugin pin `eedaabc0` (eslint-plugin-platform-rules v0.5.1) -> `v0.5.3` (tag).
+- v0.5.3 extends `no-db-in-liveness` to follow the **transitive import closure** of a liveness route's local imports (relative + `@/`), so a DB client reached through a helper (`route -> @/lib/health/collect -> @/lib/__plant__/deep -> @/lib/db`) is now caught -- the direct-import behavior is unchanged. Additive `dbInLivenessTransitive` message; the rule stays `error`.
+- No severity/wiring change to the recommended config. `eslint-config` is a devDep, so no Trigger.dev redeploy is owed (PLATFORM-PACKAGE-PIN-CONVENTION §7). Consumers (Rello, Home Scout) arm the transitive walk on their next eslint-config bump; their pre-push repo-wide ESLint is the proof.
+
 ## v0.12.1 (2026-06-02) -- Broaden prisma dev-script override globs (seed.ts + backfill-* + migrate-*)
 
 - Arming `require-tenantid-in-where` to error (v0.12.0) surfaced bare-tenant Prisma queries in `prisma/seed.ts`, `prisma/backfill-*.ts`, and `prisma/migrate-*.ts` -- legitimate full-table enumeration in one-off `npx tsx` dev scripts (run after a `db push`, never the request path), NOT a runtime tenant-isolation leak. These are exactly the dev-only/seeder class the override block was designed to exempt, but the original glob (`prisma/seed-*.ts`) caught only the *hyphenated* seeders and missed the unhyphenated entry seeder + the backfill/migrate siblings.
