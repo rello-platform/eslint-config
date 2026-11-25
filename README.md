@@ -42,7 +42,7 @@ export default defineConfig([
 
 ## Turning on the brand rule (`no-legacy-brand-in-visible-text`)
 
-Available from v0.14.0 (plugin v0.6.0) and off by default. A repo turns it on in its own `eslint.config.mjs`, in the PR that clears its visible "Rello" copy. The fix the rule asks for is `PLATFORM_BRAND.name` from `@rello-platform/slugs` v0.14.0 or later.
+Available from v0.14.0 (plugin v0.6.0) and off by default; v0.14.2 carries plugin v0.6.1 (compounds, decoded entities/escapes, component props, Error messages; RALLYROO RA-02/03). A repo turns it on in its own `eslint.config.mjs`, in the PR that clears its visible "Rello" copy. The fix the rule asks for is `PLATFORM_BRAND.name` from `@rello-platform/slugs` v0.14.0 or later.
 
 ```js
 import baseConfig from "@rello-platform/eslint-config/next";
@@ -61,7 +61,19 @@ export default defineConfig([
 ]);
 ```
 
-Use eslint-config **v0.14.1 or later**: v0.13.2 and v0.14.0 pin the plugin by tag, and npm keeps an older locked plugin on a bump. After installing, check that `node -e "console.log(require('@rello-platform/eslint-plugin-platform-rules/package.json').version)"` prints `0.6.0`.
+Use eslint-config **v0.14.2 or later** (v0.14.1 is plugin 0.6.0; v0.13.2 and v0.14.0 pin the plugin by tag, and npm keeps an older locked plugin on a bump). After installing, check that `node -e "console.log(require('@rello-platform/eslint-plugin-platform-rules/package.json').version)"` prints `0.6.1`.
+
+### The second guard: served content (`brand:scan`)
+
+Lint sees JS/TS only. Copy a site serves straight from files (`public/*.json`, `*.md`, `*.html`, the web manifest) needs the plugin's `brand-content-scan` CLI, run as a package script. It is not a hook:
+
+```json
+"scripts": {
+  "brand:scan": "brand-content-scan"
+}
+```
+
+Default globs `public/**/*.{json,md,mdx,txt,html,webmanifest}` and `src/**/*.{json,md,mdx}`; exit 0 clean, 1 hits (printed as `file:line`), 2 unreadable. Exceptions go in `.brand-scan-allow` (one file glob per line). Use the bin name as shown: if the plugin is missing it fails with 127, while `node node_modules/…/brand-content-scan.js` would exit 1, the same code as "hits". See the plugin README.
 
 The plugin is already registered by the base config, so add the rule line only, never a second `plugins` entry. Tests, specs and fixtures are exempt by file name; see the plugin README for the full exempt list.
 
