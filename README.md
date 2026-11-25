@@ -40,6 +40,29 @@ export default defineConfig([
 - `@rello-platform/slugs/no-legacy-literal` (`error` on `homeready` / `HOMESTRETCH` / `MarketIntel` / `scout` / etc., per platform-wide canonical-slug enforcement; off for `**/*.test.{ts,tsx}` and `**/__fixtures__/**`)
 - Default ignores: `.next/**`, `out/**`, `build/**`, `next-env.d.ts`
 
+## Turning on the brand rule (`no-legacy-brand-in-visible-text`)
+
+Available from v0.14.0 (plugin v0.6.0) and off by default. A repo turns it on in its own `eslint.config.mjs`, in the PR that clears its visible "Rello" copy. The fix the rule asks for is `PLATFORM_BRAND.name` from `@rello-platform/slugs` v0.14.0 or later.
+
+```js
+import baseConfig from "@rello-platform/eslint-config/next";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+  ...baseConfig,
+  {
+    rules: {
+      "@rello-platform/platform-rules/no-legacy-brand-in-visible-text": [
+        "error",
+        { allow: ["src/test/**"] }, // optional: file globs (**, *, ?) for genuine exceptions
+      ],
+    },
+  },
+]);
+```
+
+The plugin is already registered by the base config, so add the rule line only, never a second `plugins` entry. Tests, specs and fixtures are exempt by file name; see the plugin README for the full exempt list.
+
 ## Peers
 
 Consumers must already have:
