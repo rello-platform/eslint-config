@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@rello-platform/eslint-plugin-permissions": "git+https://github.com/rello-platform/eslint-plugin-permissions.git#479102ec0fcf858641f3dc7bfd9e4a23983c6e2f",
-    "@rello-platform/eslint-plugin-platform-rules": "github:rello-platform/eslint-plugin-platform-rules#f47569a14ccfa8a52fb084b29a2c0b00b084f627",
+    "@rello-platform/eslint-plugin-platform-rules": "github:rello-platform/eslint-plugin-platform-rules#47ed5b95dbf7882595d62db430292506c678ee2d",
     "@rello-platform/eslint-plugin-slugs": "git+https://github.com/rello-platform/eslint-plugin-slugs.git#521887937aae0df7873a644b883f83e853c1c5b6",
     "@typescript-eslint/parser": "^8.59.0"
   },
