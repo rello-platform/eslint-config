@@ -69,11 +69,11 @@ Lint sees JS/TS only. Copy a site serves straight from files (`public/*.json`, `
 
 ```json
 "scripts": {
-  "brand:scan": "node node_modules/@rello-platform/eslint-plugin-platform-rules/bin/brand-content-scan.js"
+  "brand:scan": "brand-content-scan"
 }
 ```
 
-Default globs `public/**/*.{json,md,mdx,txt,html,webmanifest}` and `src/**/*.{json,md,mdx}`; exit 0 clean, 1 hits (printed as `file:line`), 2 unreadable. Exceptions go in `.brand-scan-allow` (one file glob per line). See the plugin README.
+Default globs `public/**/*.{json,md,mdx,txt,html,webmanifest}` and `src/**/*.{json,md,mdx}`; exit 0 clean, 1 hits (printed as `file:line`), 2 unreadable. Exceptions go in `.brand-scan-allow` (one file glob per line). Use the bin name as shown: if the plugin is missing it fails with 127, while `node node_modules/…/brand-content-scan.js` would exit 1, the same code as "hits". See the plugin README.
 
 The plugin is already registered by the base config, so add the rule line only, never a second `plugins` entry. Tests, specs and fixtures are exempt by file name; see the plugin README for the full exempt list.
 

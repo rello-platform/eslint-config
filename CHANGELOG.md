@@ -2,7 +2,7 @@
 
 ## v0.14.2 (2026-11-25) -- Bump plugin to v0.6.1 (brand rule recall fixes + brand-content-scan CLI; RA-02/03/04)
 
-- Plugin pin `#aecc2ed2...` (v0.6.0) -> `#3326c6fb2bd86559e8b9dc18d9d6772dfed43ce0` (v0.6.1). Full-SHA pin, per the v0.14.1 rule.
+- Plugin pin `#aecc2ed2...` (v0.6.0) -> `#f47569a14ccfa8a52fb084b29a2c0b00b084f627` (v0.6.1). Full-SHA pin, per the v0.14.1 rule.
 - v0.6.1 changes only `no-legacy-brand-in-visible-text`, which is still **not wired** into `next` or `library` (opt-in per repo). It now reports compounds (`RelloCRM`, `Rello2`), decodes what renders (entities, JS escapes, zero-width splitters), reports `RELLO` in rendered JSX, reports any prop of a Capitalized component except key/ref/className/data-*, and reports Error/throw messages. Hub `src/`: 903 -> 925 reports (+22) for a repo that has the rule on.
 - New in the plugin: `bin/brand-content-scan.js`, the served-content scan. Consumers add `"brand:scan"` (README, "The second guard").
 - No other rule's code changed (`git diff v0.6.0 v0.6.1 -- lib` touches only `lib/brand-text.js` (new) and the brand rule). No severity or wiring change. A repo without the rule line sees no change.
