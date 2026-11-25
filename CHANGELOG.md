@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.14.1 (2026-11-25) -- Pin the plugin by exact commit so a bump actually delivers it (RA-01)
+
+- Plugin pin `#v0.6.0` -> `#aecc2ed2efb76a5ed3eae207b02ba532d46d90a7` (the same commit v0.6.0 tags). No code change.
+- **Why.** npm only re-checks a locked transitive git dependency against its spec when the spec names a full 40-character commit (`@npmcli/arborist/lib/dep-valid.js`: `reqCommit = /^[a-fA-F0-9]{40}$/`). Any other committish (a tag) counts as "same repo, still valid". So a consumer bumping eslint-config kept its old plugin. Rello's lock @ `f47ebe75c` declares eslint-config 0.13.2 (plugin `#v0.5.3`) but still resolves the plugin to 0.5.1 / `eedaabc`. Reproduced in a fresh project: eslint-config v0.13.1 -> `npm install ...#v0.14.0` leaves plugin 0.5.1; the v0.14.1 tarball installed over that same lock moves it to 0.6.0 / `aecc2ed2`.
+- v0.13.1 pinned by SHA and was correct. v0.13.2 and v0.14.0 pinned by tag and are affected; skip them.
+- **Rule for future bumps:** pin every git dependency here by full commit SHA. Name the tag in the CHANGELOG, not in `package.json`.
+
+
 ## v0.14.0 (2026-11-25) -- Bump plugin to v0.6.0 (no-legacy-brand-in-visible-text available, opt-in)
 
 - Bumped plugin pin `v0.5.3` -> `v0.6.0` (tag, commit `aecc2ed2`).

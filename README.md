@@ -61,6 +61,8 @@ export default defineConfig([
 ]);
 ```
 
+Use eslint-config **v0.14.1 or later**: v0.13.2 and v0.14.0 pin the plugin by tag, and npm keeps an older locked plugin on a bump. After installing, check that `node -e "console.log(require('@rello-platform/eslint-plugin-platform-rules/package.json').version)"` prints `0.6.0`.
+
 The plugin is already registered by the base config, so add the rule line only, never a second `plugins` entry. Tests, specs and fixtures are exempt by file name; see the plugin README for the full exempt list.
 
 ## Peers
