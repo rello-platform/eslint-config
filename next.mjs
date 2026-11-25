@@ -91,6 +91,12 @@ const eslintConfig = defineConfig([
   //     no-fixture-data-when-upstream-unshipped  (Rule L heuristic; warn
   //                                               permanent — human-judged)
   //     lead-not-contact               (heuristic; warn until F1 cleanup ramps)
+  // NOT wired here: platform-rules/no-legacy-brand-in-visible-text (plugin
+  // v0.6.0, RALLYROO rename). Every repo still has visible "Rello" copy, so a
+  // shared default would turn every consumer red. Each repo enables it at
+  // "error" in its own eslint.config.mjs, in the PR that clears its copy; the
+  // plugin is already registered under "@rello-platform/platform-rules" by the
+  // block below, so the consumer adds only the rule line. See README.
   {
     plugins: { "@rello-platform/platform-rules": platformRulesPlugin },
     rules: {

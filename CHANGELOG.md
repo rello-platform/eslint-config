@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.14.0 (2026-11-25) -- Bump plugin to v0.6.0 (no-legacy-brand-in-visible-text available, opt-in)
+
+- Bumped plugin pin `v0.5.3` -> `v0.6.0` (tag, commit `aecc2ed2`).
+- v0.6.0 adds `no-legacy-brand-in-visible-text` (RALLYROO rename Phase 2): it reports "Rello"/"RELLO" and hand-typed "Rallyroo" spellings in visible strings, and asks for `PLATFORM_BRAND.name` from `@rello-platform/slugs` v0.14.0. **It is NOT wired into `next` or `library`.** Each consumer enables it at `"error"` in its own config, in the PR that clears its copy (README, "Turning on the brand rule").
+- No other rule's code changed between plugin v0.5.3 and v0.6.0 (`git diff v0.5.3 v0.6.0 -- lib` touches only the new rule file). No severity or wiring change to either preset.
+- Consumers still on eslint-config **v0.13.1** (plugin v0.5.1) also pick up v0.5.3's transitive `no-db-in-liveness` walk on this bump, at `error` in `next`. Measured on origin/main 2026-11-25, it newly flags HomeReady and TheHomeStretch (2 each, `src/app/api/health/route.ts` -> `@/lib/email/public-origin-health` / `@/lib/referral/suppression-contract` -> `@/lib/db`). The other 10 are unchanged.
+- Lockfile: the plugin entry is hand-edited to `git+https`. `npm install` rewrites all three git deps to `git+ssh`, which the platform lockfile gate (`check-lockfile-ssh`) refuses. The root `version` was stale at 0.13.1 and is corrected.
+- `eslint-config` is a devDep, so no Trigger.dev redeploy is owed (PLATFORM-PACKAGE-PIN-CONVENTION §7).
+
 ## v0.13.2 (2026-09-17) -- Bump plugin to v0.5.3 (no-db-in-liveness transitive import closure, A-111)
 
 - Bumped plugin pin `eedaabc0` (eslint-plugin-platform-rules v0.5.1) -> `v0.5.3` (tag).
